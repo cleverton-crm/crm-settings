@@ -8,6 +8,7 @@ import { MongoConfigService } from './services/mongo.service';
 import { ConfigService } from './config/config.service';
 import { SettingController } from './controllers/setting.controller';
 import { SettingService } from './services/setting.service';
+import { SettingProviderSchema } from './providers/setting.provider';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { SettingService } from './services/setting.service';
     MongooseModule.forRootAsync({
       useClass: MongoConfigService,
     }),
-    MongooseModule.forFeatureAsync([]),
+    MongooseModule.forFeatureAsync([SettingProviderSchema]),
   ],
   controllers: [SettingController],
   providers: [ConfigService, SettingService],
