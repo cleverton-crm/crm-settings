@@ -1,4 +1,4 @@
-export namespace Guides {
+export namespace IGuides {
   export interface Schema {
     type: string;
     name: string;

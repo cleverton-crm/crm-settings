@@ -1,4 +1,4 @@
-import { Guides, GuidesSchema } from '../schemas/guides.schama';
+import { Guides, GuidesSchema } from '../schemas';
 
 export const GuidesProviderSchema = {
   name: Guides.name,

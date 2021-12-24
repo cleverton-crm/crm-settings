@@ -1,29 +1,29 @@
-import { Controller, Get } from '@nestjs/common';
-import { SettingService } from '../services/setting.service';
+import { Controller } from '@nestjs/common';
+import { SettingService } from '../services';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Setting } from '../interfaces/setting.interface';
+import { Core } from 'crm-core';
 
 @Controller()
 export class SettingController {
   constructor(private readonly settingService: SettingService) {}
 
-  @MessagePattern('setting:create')
-  async set(@Payload() setting: Setting.Schema): Promise<any> {
-    return; //
+  @MessagePattern('setting:set')
+  async set(@Payload() options: Core.Settings.Schema): Promise<any> {
+    return await this.settingService.set(options);
   }
 
   @MessagePattern('setting:list')
-  async list(@Payload() data: Setting.Filter) {
-    return; //
+  async list(@Payload() data: Core.Settings.Filter) {
+    return await this.settingService.list(data);
   }
 
   @MessagePattern('setting:get')
-  async get(@Payload() data: Setting.Filter): Promise<any> {
-    return; //
+  async get(@Payload() data: Core.Settings.Filter): Promise<any> {
+    return await this.settingService.get(data);
   }
 
   @MessagePattern('setting:remove')
-  async remove(@Payload() data: Setting.Filter): Promise<any> {
-    return; //
+  async remove(@Payload() data: Core.Settings.Filter): Promise<any> {
+    return await this.settingService.remove(data);
   }
 }

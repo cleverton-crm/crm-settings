@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { JwtConfigService } from './services/jwt.services';
+import {
+  JwtConfigService,
+  MongoConfigService,
+  SettingService,
+} from './services';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MongoConfigService } from './services/mongo.service';
-
 import { ConfigService } from './config/config.service';
-import { SettingController } from './controllers/setting.controller';
-import { SettingService } from './services/setting.service';
-import { SettingProviderSchema } from './providers/setting.provider';
-import { GuidesProviderSchema } from './providers/guides.provider';
+import { GuidesProviderSchema, SettingProviderSchema } from './providers';
+import { SettingController } from './controllers';
 
 @Module({
   imports: [

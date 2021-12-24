@@ -1,4 +1,4 @@
-export namespace Setting {
+export namespace ISetting {
   export interface Schema {
     type: string;
     name: string;
