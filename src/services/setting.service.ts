@@ -38,7 +38,35 @@ export class SettingService {
   }
 
   async list(data: Core.Settings.Filter) {
-    return this.settingModel.find(data).exec();
+    let result;
+    let filter = {};
+    filter = data.type
+      ? (filter = Object.assign({}, { type: data.type }))
+      : filter;
+    filter = data.object
+      ? (filter = Object.assign({}, { object: data.object }))
+      : filter;
+
+    try {
+      const setting = await this.settingModel.find(filter).exec();
+      result = setting
+        ? Core.ResponseDataAsync('Найдено записей', setting)
+        : Core.ResponseDataAsync(
+            'Запись не найдена',
+            setting,
+            HttpStatus.NOT_FOUND,
+            true,
+            'Not Found',
+          );
+    } catch (e) {
+      result = {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: e.message,
+        errors: 'Not Found',
+      };
+    }
+    console.log(result);
+    return result;
   }
 
   async get(data: Core.Settings.Filter) {
