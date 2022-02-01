@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { TcpOptions, Transport } from '@nestjs/microservices';
 import { ConfigService } from './config/config.service';
 import { cyan } from 'cli-color';
-import { Logger } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -23,3 +23,24 @@ async function bootstrap() {
   await app.listen();
 }
 bootstrap();
+
+let app: INestApplication;
+const logger = new Logger('NestApplication');
+
+async function gracefulShutdown(): Promise<void> {
+  if (app !== undefined) {
+    await app.close();
+    logger.warn('Application closed!');
+  }
+  process.exit(0);
+}
+
+process.once('SIGTERM', async () => {
+  logger.error('SIGTERM: Graceful shutdown... ');
+  await gracefulShutdown();
+});
+
+process.once('SIGINT', async () => {
+  logger.error('SIGINT: Graceful shutdown... ');
+  await gracefulShutdown();
+});
